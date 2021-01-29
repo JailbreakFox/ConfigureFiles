@@ -1,0 +1,238 @@
+" ======================================== 
+" ================ 代码样式 ===============
+" ========================================
+
+" ------------------------- 
+" ---------- 编辑 ----------
+" ------------------------- 
+" 显示代码颜色
+syntax on
+
+" 显示行号
+set number
+
+" 设置光标线
+set cursorline
+
+" 自动折行
+set wrap
+
+" 底部显示当前键入的指令
+set showcmd
+
+" 操作指令Tab键补全
+set wildmenu
+
+" ------------------------- 
+" ---------- 搜索 ----------
+" ------------------------- 
+" 高亮显示搜索匹配结果
+set hlsearch
+
+" 再次编辑程序时取消高亮
+exec "nohlsearch"
+
+" 输入搜索模式时，每输入一个字符，就自动跳到第一个匹配的结果
+set incsearch
+
+" 搜索时忽略大小写
+set ignorecase
+
+" 搜索有大小写之分时大小写敏感
+set smartcase
+
+" ------------------------- 
+" -------- 基本配置 --------
+" ------------------------- 
+" 不与 Vi 兼容
+set nocompatible
+
+" 打开文件类型检测功能,并且载入与该类型对应的缩进规则
+filetype plugin indent on
+
+" 支持使用鼠标
+set mouse=a
+
+" 使用 utf-8 编码
+set encoding=utf-8
+
+" 解决终端配色出错问题
+let &t_ut=''
+
+" 将 Tab 转为2个空格
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+
+" 让行尾有多余的空格（包括 Tab 键）显示成可见的小方块。
+set list
+set listchars=tab:▸\ ,trail:▫
+
+" 垂直滚动时，光标距离顶部/底部的位置
+set scrolloff=5
+
+" 更改缩进动作
+set tw=0
+set indentexpr=
+
+" 退格键回上一行行尾
+set backspace=indent,eol,start
+
+" 代码折叠功能
+set foldmethod=indent
+set foldlevel=99
+
+" 光标在不同模式下显示不同效果
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" 是否显示状态栏。0 表示不显示，1 表示只在多窗口时显示，2 表示显示。
+set laststatus=2
+
+" 自动切换工作目录
+set autochdir
+
+" 再次打开文件光标回到上次编辑位置
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" ------------------------- 
+" ---------- 键位 ----------
+" ------------------------- 
+" 说明空格起类似于win键作用
+let mapleader=" "
+
+" 上下键位互换
+noremap j k
+noremap k j
+
+" 键位
+map s <nop>
+map S :w<CR>
+map Q :q<CR>
+
+" 取消高亮
+noremap <LEADER>/ :nohlsearch<CR>
+
+" 反撤销
+noremap <LEADER>u <c-r>
+
+" 分屏
+map sh :set nosplitright<CR>:vsplit<CR>
+map sl :set splitright<CR>:vsplit<CR>
+map sj :set nosplitbelow<CR>:split<CR>
+map sk :set splitbelow<CR>:split<CR>
+
+" 分屏切换光标
+map <LEADER>h <C-w>h
+map <LEADER>j <C-w>k
+map <LEADER>k <C-w>j
+map <LEADER>l <C-w>l
+
+" 更改分屏大小
+map <up> :res +5<CR>
+map <down> :res -5<CR>
+map <left> :vertical resize-5<CR>
+map <right> :vertical resize+5<CR>
+
+" 分屏切换垂直/水平
+map sV <C-w>t<C-w>H
+map sH <C-w>t<C-w>K
+
+" 标签页操作
+map t :tabe<CR>
+map th :-tabnext<CR>
+map tl :+tabnext<CR>
+
+" 打开文件修改历史
+noremap <F5> :UndotreeToggle<cr>
+
+" ------------------------- 
+" -------- Vundle ---------
+" ------------------------- 
+" 这是必需的 
+set nocompatible   
+    
+" 这是必需的        
+filetype off                  
+  
+" 你在此设置运行时路径 
+set rtp+=~/.vim/bundle/Vundle.vim  
+
+" ======================================== 
+" ============== Vundle 插件 ==============
+" ========================================
+
+call vundle#begin()  
+ 
+" 这应该始终是第一个 
+Plugin 'gmarik/Vundle.vim' 
+
+" 底部状态增强/美化-airline
+Plugin 'vim-airline/vim-airline'
+
+" 配色方案-snazzy
+Plugin 'connorholyday/vim-snazzy'
+
+" 文件导航-nerdtree
+Plugin 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" 文件修改历史浏览-UndoTree
+Plugin 'mbbill/undotree'
+
+call vundle#end()
+
+" ======================================== 
+" ================ 插件样式 ================
+" ========================================
+
+" -------------------------------------------
+" 加载vim自带和插件相应的语法和文件类型相关脚本，必须
+" -------------------------------------------
+filetype plugin indent on   
+   
+" -------------------------
+" -------- 配色方案 --------
+" --------- snazzy --------
+" -------------------------
+let g:SnazzyTransparent = 1
+color snazzy
+
+" -------------------------
+" -------- 文件导航 --------
+" ------- nerdtree --------
+" -------------------------
+map tt :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
+let NERDTreeMapUpdir = ""
+let NERDTreeMapUpdirKeepOpen = "l"
+let NERDTreeMapOpenSplit = ""
+let NERDTreeOpenVSplit = ""
+let NERDTreeMapActivateNode = "i"
+let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapPreview = ""
+let NERDTreeMapCloseDir = "n"
+let NERDTreeMapChangeRoot = "y"
+" -------------------------
+" -- nerdtree-git-plugin --
+" -------------------------
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+" -------------------------
+" ---- 文件修改历史浏览 ------
+" ------- Undotree --------
+" -------------------------
+let g:undotree_DiffAutoOpen = 0
+map L :UndotreeToggle<CR>
